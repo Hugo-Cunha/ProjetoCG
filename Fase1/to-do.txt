@@ -1,0 +1,9 @@
+1 passo o leitor de XML -> vamos usar a biblioteca do tinyxml2 para ler vejam a decomentação
+
+2 passo o Generator vai ser a classe onde vamos gerar as figuras(planos boxes ...) com os argumentos dados e no final de gerar a figura vai gerar o file;
+
+Depois organizar o resto em classes e deve ser o seguinte:
+    - utils - onde vamos ter as classes pontos e figuras;    
+    - Config - vai ler o xml e transforma-lo em uma config;
+    - Main/Engine - vai ler o input e transforma-lo em  config de config em figuras/pontos e da renderscene e vemos a janela
+
