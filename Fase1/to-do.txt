@@ -4,6 +4,6 @@
 
 Depois organizar o resto em classes e deve ser o seguinte:
     - utils - onde vamos ter as classes pontos e figuras;    
-    - Config - vai ler o xml e transforma-lo em uma config;
+    - Config - vai ler o xml e transforma-lo em uma config -> Tipo cam pos e outras cenas ;
     - Main/Engine - vai ler o input e transforma-lo em  config de config em figuras/pontos e da renderscene e vemos a janela
 

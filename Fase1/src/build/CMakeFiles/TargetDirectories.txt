@@ -1,0 +1,3 @@
+/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles/engine.dir
+/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles/edit_cache.dir
+/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles/rebuild_cache.dir
