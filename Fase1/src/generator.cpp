@@ -19,16 +19,14 @@ protected:
     std::vector<Point> vertices;
 public:
     void addTriangle(Point p1, Point p2, Point p3) {
-        vertices.push_back(p1);
-        vertices.push_back(p2);
-        vertices.push_back(p3);
+        vertices.push_back(p1);vertices.push_back(p2);vertices.push_back(p3);
     }
     void save(const std::string& filename) {
-        std::string folder = "output";
+        fs::path folder{"build/output"};
         if (!fs::exists(folder)) {
             fs::create_directory(folder);
         }
-        std::string path = folder + "/" + filename;
+        fs::path path = folder / filename;
 
         std::ofstream file(path);
         if (file.is_open()) {
@@ -87,8 +85,8 @@ class Box : public Figure { public:
                 addTriangle(Point(a, -half, c), Point(b, -half, c), Point(b, -half, d));
 
                 // Face Frontal (Z = half)
-                addTriangle(Point(a, c, half), Point(b, d, half), Point(a, d, half));
-                addTriangle(Point(a, c, half), Point(b, c, half), Point(b, d, half));
+                addTriangle(Point(a, c, half), Point(a, d, half), Point(b, d, half));
+                addTriangle(Point(a, c, half), Point(b, d, half), Point(b, c, half));
 
                 // Face Traseira (Z = -half)
                 addTriangle(Point(a, c, -half), Point(a, d, -half), Point(b, d, -half));
@@ -107,70 +105,115 @@ class Box : public Figure { public:
 };
 
 // Para a esfera, usamos coordenadas esféricas. Precisamos de percorrer a latitude (β ou phi) e a longitude (α ou theta).
-// x=r⋅cos(β)⋅sin(α)
-// y=r⋅sin(β)
-// z=r⋅cos(β)⋅cos(α)
-class Sphere : public Figure { public:
+// x= r⋅cos(β)⋅sin(α)
+// y= r⋅sin(β)
+// z= r⋅cos(β)⋅cos(α)
+class Sphere : public Figure {
+public:
     Sphere(float radius, int slices, int stacks) {
         float alpha_step = (2.0f * M_PI) / slices;
         float beta_step = M_PI / stacks;
 
-        for (int i = 0; i < slices; i++) {
+        int halfStacks = stacks / 2;
+        bool isEven = (stacks % 2 == 0);
+
+        // Função auxiliar para converter ângulos em Pontos (mais limpo)
+        auto getPoint = [radius](float alpha, float beta) {
+            return Point(radius * sin(beta) * sin(alpha),
+                         radius * cos(beta),
+                         radius * sin(beta) * cos(alpha));
+        };
+
+        for (int i = 0; i < slices; ++i) {
             float a1 = i * alpha_step;
             float a2 = (i + 1) * alpha_step;
 
-            for (int j = 0; j < stacks; j++) {
-                // b vai de -PI/2 (fundo) até PI/2 (topo)
-                float b1 = -M_PI / 2.0f + j * beta_step;
-                float b2 = -M_PI / 2.0f + (j + 1) * beta_step;
+            float bUp, bDown;
 
-                // 4 pontos que formam um "quadrado" na superfície da esfera
-                Point p1(radius * cos(b1) * sin(a1), radius * sin(b1), radius * cos(b1) * cos(a1));
-                Point p2(radius * cos(b1) * sin(a2), radius * sin(b1), radius * cos(b1) * cos(a2));
-                Point p3(radius * cos(b2) * sin(a1), radius * sin(b2), radius * cos(b2) * cos(a1));
-                Point p4(radius * cos(b2) * sin(a2), radius * sin(b2), radius * cos(b2) * cos(a2));
+            if (isEven) {
+                bUp = bDown = M_PI / 2.0f; // Começa no equador (90 graus)
+            } else {
+                bUp = M_PI / 2.0f + (beta_step / 2.0f);
+                bDown = M_PI / 2.0f - (beta_step / 2.0f);
 
-                // Triângulos para cada face da stack
-                if (j != stacks - 1) addTriangle(p1, p2, p4);
-                if (j != 0) addTriangle(p1, p4, p3);
+                // Faixa do equador (ajuste para stacks ímpares)
+                addTriangle(getPoint(a1, bDown), getPoint(a2, bDown), getPoint(a1, bUp));
+                addTriangle(getPoint(a1, bUp),   getPoint(a2, bDown), getPoint(a2, bUp));
             }
+
+            // Pontos de controlo que "sobem" e "descem" a esfera
+            Point p1Up = getPoint(a1, bUp);
+            Point p2Up = getPoint(a2, bUp);
+            Point p1Down = getPoint(a1, bDown);
+            Point p2Down = getPoint(a2, bDown);
+
+            for (int j = 0; j < halfStacks - 1; ++j) {
+                // METADE SUPERIOR (Rumo ao Polo Norte)
+                float nextBUp = bUp - beta_step;
+                addTriangle(p1Up, p2Up, getPoint(a1, nextBUp));
+                addTriangle(getPoint(a1, nextBUp), p2Up, getPoint(a2, nextBUp));
+                
+                bUp = nextBUp;
+                p1Up = getPoint(a1, bUp);
+                p2Up = getPoint(a2, bUp);
+
+                // METADE INFERIOR (Rumo ao Polo Sul)
+                float nextBDown = bDown + beta_step;
+                addTriangle(p2Down, p1Down, getPoint(a2, nextBDown));
+                addTriangle(getPoint(a2, nextBDown), p1Down, getPoint(a1, nextBDown));
+
+                bDown = nextBDown;
+                p1Down = getPoint(a1, bDown);
+                p2Down = getPoint(a2, bDown);
+            }
+
+            // Caps
+            addTriangle(p1Up, p2Up, Point(0.0f, radius, 0.0f));       // Norte
+            addTriangle(p2Down, p1Down, Point(0.0f, -radius, 0.0f));    // Sul
         }
     }
 };
 
-class Cone : public Figure { public:
+class Cone : public Figure {
+public:
     Cone(float radius, float height, int slices, int stacks) {
         float alpha_step = (2.0f * M_PI) / slices;
         float h_step = height / (float)stacks;
-        float r_step = radius / (float)stacks;
 
-        for (int i = 0; i < slices; i++) {
+        for (int i = 0; i < slices; ++i) {
             float a1 = i * alpha_step;
             float a2 = (i + 1) * alpha_step;
 
-            // 1. Base (plano XZ, y=0) [cite: 221]
-            addTriangle(Point(0, 0, 0), 
+            // 1. Desenhar a Base (Círculo no chão Y=0)
+            addTriangle(Point(0,0,0), 
                         Point(radius * sin(a2), 0, radius * cos(a2)),
                         Point(radius * sin(a1), 0, radius * cos(a1)));
 
-            // 2. Lados (percorrendo as stacks)
+            // 2. Desenhar as Laterais (Stacks)
             for (int j = 0; j < stacks; j++) {
+                // r1 e r2 calculam o raio atual com base na altura (semelhança de triângulos)
+                float r1 = radius * (float(stacks - j) / stacks);
+                float r2 = radius * (float(stacks - (j + 1)) / stacks);
+                
                 float h1 = j * h_step;
                 float h2 = (j + 1) * h_step;
-                float r1 = radius - (j * r_step);
-                float r2 = radius - ((j + 1) * r_step);
 
                 Point p1(r1 * sin(a1), h1, r1 * cos(a1));
                 Point p2(r1 * sin(a2), h1, r1 * cos(a2));
                 Point p3(r2 * sin(a1), h2, r2 * cos(a1));
                 Point p4(r2 * sin(a2), h2, r2 * cos(a2));
 
-                // Triângulos laterais
-                addTriangle(p1, p2, p4);
-                addTriangle(p1, p4, p3);
+                if (j == stacks - 1) {
+                    // Última stack: Apenas um triângulo que fecha na ponta (Apex)
+                    addTriangle(p1, p2, Point(0, height, 0));
+                } else {
+                    // Corpo: Dois triângulos formando um trapézio inclinado
+                    addTriangle(p1, p2, p4);
+                    addTriangle(p1, p4, p3);
+                }
             }
         }
-    } 
+    }
 };
 
 // --- Main Limpa e Organizada ---
@@ -185,22 +228,18 @@ int main(int argc, char** argv) {
 
     try {
         if (model == "plane" && argc == 5) {
-            // generator plane 1 3 plane.3d 
             fig = new Plane(std::stof(argv[2]), std::stoi(argv[3]));
             fig->save(argv[4]);
         } 
         else if (model == "box" && argc == 5) {
-            // generator box 2 3 box.3d 
             fig = new Box(std::stof(argv[2]), std::stoi(argv[3]));
             fig->save(argv[4]);
         } 
         else if (model == "sphere" && argc == 6) {
-            // generator sphere 1 10 10 sphere.3d 
             fig = new Sphere(std::stof(argv[2]), std::stoi(argv[3]), std::stoi(argv[4]));
             fig->save(argv[5]);
         } 
         else if (model == "cone" && argc == 7) {
-            // generator cone 1 2 4 3 cone.3d 
             fig = new Cone(std::stof(argv[2]), std::stof(argv[3]), std::stoi(argv[4]), std::stoi(argv[5]));
             fig->save(argv[6]);
         } 

@@ -37,6 +37,12 @@ public:
         file.close();
         return true;
     }
+
+    void addTriangle(Point p1, Point p2, Point p3) {
+        vertices.push_back(p1);
+        vertices.push_back(p2);
+        vertices.push_back(p3);
+    }
 };
 
 // Estrutura para a configuração da cena (Câmara + Modelos)
@@ -67,7 +73,6 @@ void changeSize(int w, int h) {
 	glLoadIdentity();
     glViewport(0, 0, w, h);
 
-	//gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
     gluPerspective(sceneConfig.fov, ratio, sceneConfig.near, sceneConfig.far);
 	glMatrixMode(GL_MODELVIEW);
 }
@@ -85,18 +90,18 @@ void drawModels() {
 
 void drawAxes(){
 	glBegin(GL_LINES);
-	// X axis in red
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(-100.0f, 0.0f, 0.0f);
-	glVertex3f( 100.0f, 0.0f, 0.0f);
-	// Y Axis in Green
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f, -100.0f, 0.0f);
-	glVertex3f(0.0f, 100.0f, 0.0f);
-	// Z Axis in Blue
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, -100.0f);
-	glVertex3f(0.0f, 0.0f, 100.0f);
+        // X axis in red
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(-100.0f, 0.0f, 0.0f);
+        glVertex3f( 100.0f, 0.0f, 0.0f);
+        // Y Axis in Green
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(0.0f, -100.0f, 0.0f);
+        glVertex3f(0.0f, 100.0f, 0.0f);
+        // Z Axis in Blue
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(0.0f, 0.0f, -100.0f);
+        glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
 }
 
@@ -167,6 +172,14 @@ bool loadConfig(const char* xmlPath) {
     tinyxml2::XMLElement* root = doc.FirstChildElement("world");
     if (!root) return false;
 
+    tinyxml2::XMLElement* win = root->FirstChildElement("window");
+    if (win) {
+        sceneConfig.width = win->IntAttribute("width");
+        sceneConfig.height = win->IntAttribute("height");
+    } else {
+        sceneConfig.width = 800; sceneConfig.height = 800; // Default
+    }
+
     tinyxml2::XMLElement* cam = root->FirstChildElement("camera");
     if (cam) {
         // Posição: Usamos FloatAttribute para ler o número diretamente
@@ -189,9 +202,11 @@ bool loadConfig(const char* xmlPath) {
 
         // Projeção
         tinyxml2::XMLElement* proj = cam->FirstChildElement("projection");
+        if (proj) {
         sceneConfig.fov = proj->FloatAttribute("fov");
         sceneConfig.near = proj->FloatAttribute("near");
         sceneConfig.far = proj->FloatAttribute("far");
+    }
     }
 
     // Modelos
@@ -222,11 +237,8 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Distância da câmara à origem 
     radius = sqrt(pow(sceneConfig.posCam[0], 2) + pow(sceneConfig.posCam[1], 2) + pow(sceneConfig.posCam[2], 2));
-    // Ângulo Beta (latitude)
     beta_ = asin(sceneConfig.posCam[1] / radius);
-    // Ângulo Alpha (longitude)
     alpha = atan2(sceneConfig.posCam[0], sceneConfig.posCam[2]);
 
     glutInit(&argc, argv);
