@@ -13,8 +13,6 @@
 
 using namespace std;
 
-// Estrutura para a configuração da cena (Câmara + Modelos)
-
 Config sceneConfig;
 
 float alpha, beta_, radius;
@@ -42,7 +40,6 @@ void changeSize(int w, int h) {
 
 void drawModels() {
     for (auto& fig : sceneConfig.models) {
-        // E chama o método draw() de cada uma
         fig.draw(); 
     }
 }

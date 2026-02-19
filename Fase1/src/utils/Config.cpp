@@ -5,7 +5,6 @@
 using namespace tinyxml2;
 
 Config::Config() : width(800), height(800), fov(45.0f), near(1.0f), far(1000.0f) {
-    // Inicializar arrays a zero por segurança
     for(int i=0; i<3; i++) posCam[i] = lookAt[i] = up[i] = 0.0f;
 }
 

@@ -13,11 +13,9 @@ find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
 include_directories(${OpenGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIR})
-#include_directories(tinyXML)
 include_directories(utils)
 
 # Associa a biblioteca das figuras e dos pontos aos executáveis
-# add_executable(engine engine.cpp tinyXML/tinyxml2.cpp utils/Figure.cpp)
 add_executable(engine engine.cpp tinyXML/tinyxml2.cpp utils/Figure.cpp utils/Config.cpp)
 add_executable(generator ./generator.cpp utils/Figure.cpp)
 
