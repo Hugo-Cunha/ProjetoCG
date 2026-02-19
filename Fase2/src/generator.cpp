@@ -26,7 +26,9 @@ int main(int argc, char **argv)
 
         else if (model == "cone" && argc == 7)fig = new Cone(std::stof(argv[2]), std::stof(argv[3]), std::stoi(argv[4]), std::stoi(argv[5]));
         
-        else{
+        else if (model == "ring" && argc == 6) {fig = new Ring(std::stof(argv[2]), std::stof(argv[3]), std::stoi(argv[4]));
+
+        }else{
             std::cout << "Comando invalido ou falta de argumentos." << std::endl;
         }
     }
