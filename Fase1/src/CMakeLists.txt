@@ -13,15 +13,13 @@ find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
 include_directories(${OpenGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIR})
-include_directories(tinyXML)
-
-#add_executable(generator.exe ./generator.cpp)
+#include_directories(tinyXML)
+include_directories(utils)
 
 # Associa a biblioteca das figuras e dos pontos aos executáveis
-# target_link_libraries(generator.exe utils_lib)
-add_executable(engine engine.cpp tinyXML/tinyxml2.cpp)
-
-
+# add_executable(engine engine.cpp tinyXML/tinyxml2.cpp utils/Figure.cpp)
+add_executable(engine engine.cpp tinyXML/tinyxml2.cpp utils/Figure.cpp utils/Config.cpp)
+add_executable(generator ./generator.cpp utils/Figure.cpp)
 
 if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")
@@ -56,7 +54,7 @@ else (WIN32) #Linux and Mac
 	link_directories(${GLUT_LIBRARY_DIRS})
 	add_definitions(${GLUT_DEFINITIONS})
 	
-	#target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} )
+	target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} )
 	target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} )
 	if(NOT GLUT_FOUND)
 	   message(ERROR ": GLUT not found!")

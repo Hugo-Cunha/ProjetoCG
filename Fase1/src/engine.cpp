@@ -8,50 +8,12 @@
 #include <vector>
 #include <fstream>
 #include <cmath>
-#include "tinyXML/tinyxml2.h" // Usamos TinyXML2
+#include "utils/Figure.h"
+#include "utils/Config.h"
 
 using namespace std;
 
-class Point {
-public:
-    float x, y, z;
-    Point(float x, float y, float z) : x(x), y(y), z(z) {}
-};
-
-// Classe Figure expandida para carregar ficheiros
-class Figure {
-public:
-    vector<Point> vertices;
-
-    bool load(const string& filename) {
-        ifstream file(filename);
-        if (!file.is_open()) return false;
-
-        int numVertices;
-        file >> numVertices;
-        float x, y, z;
-        for (int i = 0; i < numVertices; i++) {
-            file >> x >> y >> z;
-            vertices.push_back(Point(x, y, z));
-        }
-        file.close();
-        return true;
-    }
-
-    void addTriangle(Point p1, Point p2, Point p3) {
-        vertices.push_back(p1);
-        vertices.push_back(p2);
-        vertices.push_back(p3);
-    }
-};
-
 // Estrutura para a configuração da cena (Câmara + Modelos)
-struct Config {
-    float posCam[3], lookAt[3], up[3], projection[3];
-    float fov, near, far;
-    int width, height;
-    vector<Figure> models;
-};
 
 Config sceneConfig;
 
@@ -79,13 +41,10 @@ void changeSize(int w, int h) {
 
 
 void drawModels() {
-    glBegin(GL_TRIANGLES);
-    for (const auto& fig : sceneConfig.models) {
-        for (const auto& p : fig.vertices) {
-            glVertex3f(p.x, p.y, p.z);
-        }
+    for (auto& fig : sceneConfig.models) {
+        // E chama o método draw() de cada uma
+        fig.draw(); 
     }
-    glEnd();
 }
 
 void drawAxes(){
@@ -162,77 +121,13 @@ void renderScene(void) {
 
 // ------------------------------------------------
 
-bool loadConfig(const char* xmlPath) {
-    tinyxml2::XMLDocument doc;
-    // No TinyXML-2, o LoadFile devolve um código de erro (0 ou XML_SUCCESS é sucesso)
-    if (doc.LoadFile(xmlPath) != tinyxml2::XML_SUCCESS) {
-        return false;
-    }
-
-    tinyxml2::XMLElement* root = doc.FirstChildElement("world");
-    if (!root) return false;
-
-    tinyxml2::XMLElement* win = root->FirstChildElement("window");
-    if (win) {
-        sceneConfig.width = win->IntAttribute("width");
-        sceneConfig.height = win->IntAttribute("height");
-    } else {
-        sceneConfig.width = 800; sceneConfig.height = 800; // Default
-    }
-
-    tinyxml2::XMLElement* cam = root->FirstChildElement("camera");
-    if (cam) {
-        // Posição: Usamos FloatAttribute para ler o número diretamente
-        tinyxml2::XMLElement* pos = cam->FirstChildElement("position");
-        sceneConfig.posCam[0] = pos->FloatAttribute("x");
-        sceneConfig.posCam[1] = pos->FloatAttribute("y");
-        sceneConfig.posCam[2] = pos->FloatAttribute("z");
-
-        // LookAt
-        tinyxml2::XMLElement* lookAt = cam->FirstChildElement("lookAt");
-        sceneConfig.lookAt[0] = lookAt->FloatAttribute("x");
-        sceneConfig.lookAt[1] = lookAt->FloatAttribute("y");
-        sceneConfig.lookAt[2] = lookAt->FloatAttribute("z");
-
-        // Up
-        tinyxml2::XMLElement* up = cam->FirstChildElement("up");
-        sceneConfig.up[0] = up->FloatAttribute("x");
-        sceneConfig.up[1] = up->FloatAttribute("y");
-        sceneConfig.up[2] = up->FloatAttribute("z");
-
-        // Projeção
-        tinyxml2::XMLElement* proj = cam->FirstChildElement("projection");
-        if (proj) {
-        sceneConfig.fov = proj->FloatAttribute("fov");
-        sceneConfig.near = proj->FloatAttribute("near");
-        sceneConfig.far = proj->FloatAttribute("far");
-    }
-    }
-
-    // Modelos
-    tinyxml2::XMLElement* group = root->FirstChildElement("group");
-    tinyxml2::XMLElement* models = group->FirstChildElement("models");
-    if (models) {
-        for (tinyxml2::XMLElement* m = models->FirstChildElement("model"); m; m = m->NextSiblingElement("model")) {
-            Figure f;
-            const char* filename = m->Attribute("file");
-            if (filename && f.load(filename)) {
-                sceneConfig.models.push_back(f);
-            }
-        }
-    }
-    return true;
-}
-
-// ------------------------------------------------
-
 int main(int argc, char** argv) {
     if (argc < 2) {
         cout << "Uso: ./engine config.xml" << endl;
         return 1;
     }
 
-    if (!loadConfig(argv[1])) {
+    if (!sceneConfig.loadXML(argv[1])) {
         cout << "Erro ao carregar XML!" << endl;
         return 1;
     }
@@ -248,8 +143,8 @@ int main(int argc, char** argv) {
     glutCreateWindow("CG Engine - Fase 1");
 
     glutDisplayFunc(renderScene);
-    glutReshapeFunc(changeSize); // Usa a tua função changeSize
-    glutKeyboardFunc(keyboard);   // Registar as tuas funções de teclado
+    glutReshapeFunc(changeSize);
+    glutKeyboardFunc(keyboard);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

@@ -10,6 +10,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/engine.cpp" "CMakeFiles/engine.dir/engine.cpp.o" "gcc" "CMakeFiles/engine.dir/engine.cpp.o.d"
   "/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/tinyXML/tinyxml2.cpp" "CMakeFiles/engine.dir/tinyXML/tinyxml2.cpp.o" "gcc" "CMakeFiles/engine.dir/tinyXML/tinyxml2.cpp.o.d"
+  "/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/utils/Config.cpp" "CMakeFiles/engine.dir/utils/Config.cpp.o" "gcc" "CMakeFiles/engine.dir/utils/Config.cpp.o.d"
+  "/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/utils/Figure.cpp" "CMakeFiles/engine.dir/utils/Figure.cpp.o" "gcc" "CMakeFiles/engine.dir/utils/Figure.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

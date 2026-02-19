@@ -129,6 +129,19 @@ engine/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/build
 .PHONY : engine/fast
 
+#=============================================================================
+# Target rules for targets named generator
+
+# Build rule for target.
+generator: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 generator
+.PHONY : generator
+
+# fast build rule for target.
+generator/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/build
+.PHONY : generator/fast
+
 engine.o: engine.cpp.o
 .PHONY : engine.o
 
@@ -152,6 +165,30 @@ engine.s: engine.cpp.s
 engine.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/engine.cpp.s
 .PHONY : engine.cpp.s
+
+generator.o: generator.cpp.o
+.PHONY : generator.o
+
+# target to build an object file
+generator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/generator.cpp.o
+.PHONY : generator.cpp.o
+
+generator.i: generator.cpp.i
+.PHONY : generator.i
+
+# target to preprocess a source file
+generator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/generator.cpp.i
+.PHONY : generator.cpp.i
+
+generator.s: generator.cpp.s
+.PHONY : generator.s
+
+# target to generate assembly for a file
+generator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/generator.cpp.s
+.PHONY : generator.cpp.s
 
 tinyXML/tinyxml2.o: tinyXML/tinyxml2.cpp.o
 .PHONY : tinyXML/tinyxml2.o
@@ -177,6 +214,57 @@ tinyXML/tinyxml2.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/tinyXML/tinyxml2.cpp.s
 .PHONY : tinyXML/tinyxml2.cpp.s
 
+utils/Config.o: utils/Config.cpp.o
+.PHONY : utils/Config.o
+
+# target to build an object file
+utils/Config.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/utils/Config.cpp.o
+.PHONY : utils/Config.cpp.o
+
+utils/Config.i: utils/Config.cpp.i
+.PHONY : utils/Config.i
+
+# target to preprocess a source file
+utils/Config.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/utils/Config.cpp.i
+.PHONY : utils/Config.cpp.i
+
+utils/Config.s: utils/Config.cpp.s
+.PHONY : utils/Config.s
+
+# target to generate assembly for a file
+utils/Config.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/utils/Config.cpp.s
+.PHONY : utils/Config.cpp.s
+
+utils/Figure.o: utils/Figure.cpp.o
+.PHONY : utils/Figure.o
+
+# target to build an object file
+utils/Figure.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/utils/Figure.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/utils/Figure.cpp.o
+.PHONY : utils/Figure.cpp.o
+
+utils/Figure.i: utils/Figure.cpp.i
+.PHONY : utils/Figure.i
+
+# target to preprocess a source file
+utils/Figure.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/utils/Figure.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/utils/Figure.cpp.i
+.PHONY : utils/Figure.cpp.i
+
+utils/Figure.s: utils/Figure.cpp.s
+.PHONY : utils/Figure.s
+
+# target to generate assembly for a file
+utils/Figure.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/utils/Figure.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/utils/Figure.cpp.s
+.PHONY : utils/Figure.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +274,22 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... engine"
+	@echo "... generator"
 	@echo "... engine.o"
 	@echo "... engine.i"
 	@echo "... engine.s"
+	@echo "... generator.o"
+	@echo "... generator.i"
+	@echo "... generator.s"
 	@echo "... tinyXML/tinyxml2.o"
 	@echo "... tinyXML/tinyxml2.i"
 	@echo "... tinyXML/tinyxml2.s"
+	@echo "... utils/Config.o"
+	@echo "... utils/Config.i"
+	@echo "... utils/Config.s"
+	@echo "... utils/Figure.o"
+	@echo "... utils/Figure.i"
+	@echo "... utils/Figure.s"
 .PHONY : help
 
 

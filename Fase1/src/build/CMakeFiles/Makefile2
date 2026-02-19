@@ -64,6 +64,7 @@ CMAKE_BINARY_DIR = /home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build
 
 # The main recursive "all" target.
 all: CMakeFiles/engine.dir/all
+all: CMakeFiles/generator.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -72,6 +73,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/engine.dir/clean
+clean: CMakeFiles/generator.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -81,12 +83,12 @@ clean: CMakeFiles/engine.dir/clean
 CMakeFiles/engine.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles --progress-num=1,2,3 "Built target engine"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target engine"
 .PHONY : CMakeFiles/engine.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/engine.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/engine.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles 0
 .PHONY : CMakeFiles/engine.dir/rule
@@ -99,6 +101,32 @@ engine: CMakeFiles/engine.dir/rule
 CMakeFiles/engine.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/clean
 .PHONY : CMakeFiles/engine.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/generator.dir
+
+# All Build rule for target.
+CMakeFiles/generator.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles --progress-num=6,7,8 "Built target generator"
+.PHONY : CMakeFiles/generator.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/generator.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/generator.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hugo-cunha/Desktop/CG/ProjetoCG/Fase1/src/build/CMakeFiles 0
+.PHONY : CMakeFiles/generator.dir/rule
+
+# Convenience name for target.
+generator: CMakeFiles/generator.dir/rule
+.PHONY : generator
+
+# clean rule for target.
+CMakeFiles/generator.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generator.dir/build.make CMakeFiles/generator.dir/clean
+.PHONY : CMakeFiles/generator.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
