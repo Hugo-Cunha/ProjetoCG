@@ -18,10 +18,13 @@ Config sceneConfig;
 float alpha, beta_, radius;
 
 int mode = GL_LINE;
+bool axes = true;
 
 float posX = 0.0f, posZ = 0.0f;
 float angle = 0.0f;
 float scaleY = 1.0f;
+const float cameraAngleStep = 3.14159265f / 30.0f;
+const float cameraZoomStep = 0.5f;
 
 // -----------------------------------------------
 
@@ -46,18 +49,18 @@ void drawModels() {
 
 void drawAxes(){
 	glBegin(GL_LINES);
-        // X axis in red
+        // X axis vermelho
         glColor3f(1.0f, 0.0f, 0.0f);
-        glVertex3f(-100.0f, 0.0f, 0.0f);
-        glVertex3f( 100.0f, 0.0f, 0.0f);
-        // Y Axis in Green
+        glVertex3f(-1.5f, 0.0f, 0.0f);
+        glVertex3f( 1.5f, 0.0f, 0.0f);
+        // Y Axis Verde
         glColor3f(0.0f, 1.0f, 0.0f);
-        glVertex3f(0.0f, -100.0f, 0.0f);
-        glVertex3f(0.0f, 100.0f, 0.0f);
-        // Z Axis in Blue
+        glVertex3f(0.0f, -1.5f, 0.0f);
+        glVertex3f(0.0f, 1.5f, 0.0f);
+        // Z Axis Azul
         glColor3f(0.0f, 0.0f, 1.0f);
-        glVertex3f(0.0f, 0.0f, -100.0f);
-        glVertex3f(0.0f, 0.0f, 100.0f);
+        glVertex3f(0.0f, 0.0f, -1.5f);
+        glVertex3f(0.0f, 0.0f, 1.5f);
 	glEnd();
 }
 
@@ -68,6 +71,9 @@ void keyboard(unsigned char key, int x, int y){
 			break;
 		case 'd':
 			angle += 5.0f;
+			break;
+		case 'e':
+			axes = !axes;
 			break;
 		case 'w':
 			scaleY += 0.5f;
@@ -84,8 +90,37 @@ void keyboard(unsigned char key, int x, int y){
 		case 'p':
 			glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 			break;
+		case 'i':
+			radius -= cameraZoomStep;
+			if (radius < 0.1f) radius = 0.1f;
+			break;
+		case 'o':
+			radius += cameraZoomStep;
+			break;
 	}
 	glutPostRedisplay();
+}
+
+void processSpecialKeys(int key, int x, int y) {
+    const float betaLimit = (3.14159265f / 2.0f) - 0.01f;
+
+    switch (key) {
+        case GLUT_KEY_UP:
+            beta_ += cameraAngleStep;
+            if (beta_ > betaLimit) beta_ = betaLimit;
+            break;
+        case GLUT_KEY_DOWN:
+            beta_ -= cameraAngleStep;
+            if (beta_ < -betaLimit) beta_ = -betaLimit;
+            break;
+        case GLUT_KEY_LEFT:
+            alpha -= cameraAngleStep;
+            break;
+        case GLUT_KEY_RIGHT:
+            alpha += cameraAngleStep;
+            break;
+    }
+    glutPostRedisplay();
 }
 
 
@@ -102,8 +137,8 @@ void renderScene(void) {
               sceneConfig.lookAt[0], sceneConfig.lookAt[1], sceneConfig.lookAt[2],
               sceneConfig.up[0], sceneConfig.up[1], sceneConfig.up[2]);
 
-    // Desenho dos eixos
-    drawAxes();
+    // Desenho opcional dos eixos
+    if (axes) drawAxes();
 
 	glTranslatef(posX, 0.0f, posZ);
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
@@ -142,6 +177,7 @@ int main(int argc, char** argv) {
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
     glutKeyboardFunc(keyboard);
+    glutSpecialFunc(processSpecialKeys);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
