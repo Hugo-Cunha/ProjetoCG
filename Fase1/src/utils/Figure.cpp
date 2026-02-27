@@ -141,9 +141,10 @@ Sphere::Sphere(float radius, int slices, int stacks){
 
         // Função auxiliar para converter ângulos em Pontos
         auto getPoint = [radius](float alpha, float beta){
-            return Point(radius * sin(beta) * sin(alpha),
-                         radius * cos(beta),
-                         radius * sin(beta) * cos(alpha));
+            float betaLat = (M_PI / 2.0f) - beta;
+            return Point(radius * cos(betaLat) * sin(alpha),
+                         radius * sin(betaLat),
+                         radius * cos(betaLat) * cos(alpha));
         };
         // x= r⋅cos(β)⋅sin(α)
         // y= r⋅sin(β)
