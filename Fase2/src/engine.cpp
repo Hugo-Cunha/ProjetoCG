@@ -18,10 +18,14 @@ Config sceneConfig;
 float alpha, beta_, radius;
 
 int mode = GL_LINE;
+bool axes = true;
 
 float posX = 0.0f, posZ = 0.0f;
 float angle = 0.0f;
 float scaleY = 1.0f;
+
+const float cameraAngleStep = 3.14159265f / 30.0f;
+const float cameraZoomStep = 0.5f;
 
 // -----------------------------------------------
 
@@ -71,6 +75,9 @@ void keyboard(unsigned char key, int x, int y){
 		case 'd':
 			angle += 5.0f;
 			break;
+		case 'e':
+			axes = !axes;
+			break;
 		case 'w':
 			scaleY += 0.5f;
 			break;
@@ -86,11 +93,39 @@ void keyboard(unsigned char key, int x, int y){
 		case 'p':
 			glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 			break;
+		case 'i':
+			radius -= cameraZoomStep;
+			if (radius < 0.1f) radius = 0.1f;
+			break;
+		case 'o':
+			radius += cameraZoomStep;
+			break;
 	}
 	glutPostRedisplay();
 }
 
+void processSpecialKeys(int key, int x, int y) {
+    const float betaLimit = (3.14159265f / 2.0f) - 0.01f;
 
+    switch (key) {
+        case GLUT_KEY_UP:
+            beta_ += cameraAngleStep;
+            if (beta_ > betaLimit) beta_ = betaLimit;
+            break;
+        case GLUT_KEY_DOWN:
+            beta_ -= cameraAngleStep;
+            if (beta_ < -betaLimit) beta_ = -betaLimit;
+            break;
+        case GLUT_KEY_LEFT:
+            alpha -= cameraAngleStep;
+            break;
+        case GLUT_KEY_RIGHT:
+            alpha += cameraAngleStep;
+            break;
+    }
+    glutPostRedisplay();
+}
+    
 void renderScene(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -106,7 +141,7 @@ void renderScene(void) {
 
 
     // Desenho dos eixos
-    drawAxes();
+    if (axes) drawAxes();
 
 	//glTranslatef(posX, 0.0f, posZ);
 	//glRotatef(angle, 0.0f, 1.0f, 0.0f);
@@ -145,6 +180,7 @@ int main(int argc, char** argv) {
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
     glutKeyboardFunc(keyboard);
+    glutSpecialFunc(processSpecialKeys);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

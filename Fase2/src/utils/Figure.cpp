@@ -84,7 +84,8 @@ Plane::Plane(float size, int divisions)
 };
 
 
-Box::Box(float size, int divisions)
+Box::
+    Box(float size, int divisions)
     {
         float half = size / 2.0f;
         float step = size / (float)divisions;
@@ -274,6 +275,7 @@ Ring::Ring(float ri, float re, int slices) {
         addTriangle(p1i, p2i, p2e);
 
         // --- FACE DE BAIXO (Visível de Y < 0) ---
+        // Invertemos a ordem (p1e em vez de p1i primeiro) para manter o CCW
         addTriangle(p1i, p1e, p2e);
         addTriangle(p1i, p2e, p2i);
     }
