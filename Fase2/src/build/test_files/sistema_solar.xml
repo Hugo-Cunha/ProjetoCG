@@ -10,7 +10,7 @@
     <group>
         <group>
             <transform>
-                <scale x="20" y="20" z="20"/> <!-- Tamanho do Sol -->
+                <scale x="20" y="20" z="20" /> <!-- Tamanho do Sol -->
             </transform>
             <models>
                 <model file="./output/sphere.3d" /> <!-- Sol -->
@@ -18,9 +18,9 @@
         </group>
         <group>
             <transform>
-                <rotate angle ="180" x="0" y="1" z="0"/> <!-- Rotação de Mercúrio relativa ao Sol -->
-                <translate x="24" y="0" z="0"/>
-                <scale x="0.3" y="0.3" z="0.3"/> <!-- Tamanho de Mercúrio -->
+                <rotate angle="180" x="0" y="1" z="0" /> <!-- Rotação de Mercúrio relativa ao Sol -->
+                <translate x="24" y="0" z="0" />
+                <scale x="0.3" y="0.3" z="0.3" /> <!-- Tamanho de Mercúrio -->
             </transform>
             <models>
                 <model file="./output/sphere.3d" /> <!-- Mercúrio -->
@@ -28,9 +28,9 @@
         </group>
         <group>
             <transform>
-                <rotate angle ="180" x="0" y="1" z="0"/> <!-- Rotação de Vénus relativa ao Sol -->
-                <translate x="29" y="0" z="0"/>
-                <scale x="0.5" y="0.5" z="0.5"/> <!-- Tamanho de Vénus -->
+                <rotate angle="180" x="0" y="1" z="0" /> <!-- Rotação de Vénus relativa ao Sol -->
+                <translate x="29" y="0" z="0" />
+                <scale x="0.5" y="0.5" z="0.5" /> <!-- Tamanho de Vénus -->
             </transform>
             <models>
                 <model file="./output/sphere.3d" /> <!-- Vénus -->
@@ -38,12 +38,12 @@
         </group>
         <group>
             <transform>
-                <rotate angle ="180" x="0" y="1" z="0"/> <!-- Rotação da Terra relativa ao Sol -->
-                <translate x="34" y="0" z="0"/>
+                <rotate angle="180" x="0" y="1" z="0" /> <!-- Rotação da Terra relativa ao Sol -->
+                <translate x="34" y="0" z="0" />
             </transform>
             <group>
                 <transform>
-                    <scale x="0.5" y="0.5" z="0.5"/> <!-- Tamanho da Terra -->
+                    <scale x="0.5" y="0.5" z="0.5" /> <!-- Tamanho da Terra -->
                 </transform>
                 <models>
                     <model file="./output/sphere.3d" /> <!-- Terra -->
@@ -51,8 +51,8 @@
             </group>
             <group>
                 <transform>
-                    <translate x="0" y="0" z="1"/> <!-- Distância da Lua à Terra -->
-                    <scale x="0.1" y="0.1" z="0.1"/> <!-- Tamanho da Lua -->
+                    <translate x="0" y="0" z="1" /> <!-- Distância da Lua à Terra -->
+                    <scale x="0.1" y="0.1" z="0.1" /> <!-- Tamanho da Lua -->
                 </transform>
                 <models>
                     <model file="./output/sphere.3d" /> <!-- Lua -->
@@ -61,32 +61,79 @@
         </group>
         <group>
             <transform>
-                <rotate angle ="180" x="0" y="1" z="0"/> <!-- Rotação de Marte relativa ao Sol -->
-                <translate x="39" y="0" z="0"/>
-                <scale x="0.4" y="0.4" z="0.4"/> <!-- Tamanho de Marte -->
+                <rotate angle="180" x="0" y="1" z="0" /> <!-- Rotação de Marte relativa ao Sol -->
+                <translate x="39" y="0" z="0" />
             </transform>
-            <models>
-                <model file="./output/sphere.3d" /> <!-- Marte -->
-            </models>
+
+            <group>
+                <transform>
+                    <scale x="0.4" y="0.4" z="0.4" /> <!-- Tamanho de Marte -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Marte -->
+                </models>
+            </group>
+
+            <group>
+                <transform>
+                    <translate x="-0.5" y="0.3" z="0.5" /> <!-- Distância de Fobos a Marte -->
+                    <scale x="0.1" y="0.1" z="0.1" /> <!-- Tamanho de Fobos -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Fobos -->
+                </models>
+            </group>
+
+            <group>
+                <transform>
+                    <translate x="0.5" y="0.5" z="0.5" /> <!-- Distância de Deimos a Marte -->
+                    <scale x="0.08" y="0.08" z="0.08" /> <!-- Tamanho de Deimos -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Deimos -->
+                </models>
+            </group>
         </group>
         <group>
             <transform>
-                <rotate angle ="180" x="0" y="1" z="0"/> <!-- Rotação de Júpiter relativa ao Sol -->
-                <translate x="49" y="0" z="0"/>
-                <scale x="6" y="6" z="6"/> <!-- Tamanho de Júpiter -->
-            </transform>
-            <models>
-                <model file="./output/sphere.3d" /> <!-- Júpiter -->
-            </models>
-        </group>
-        <group>
-            <transform>
-                <rotate angle ="180" x="0" y="1" z="0"/> <!-- Rotação de Saturno relativa ao Sol -->
-                <translate x="66" y="0" z="0"/>
+                <rotate angle="180" x="0" y="1" z="0" /> <!-- Rotação de Júpiter relativa ao Sol -->
+                <translate x="49" y="0" z="0" />
             </transform>
             <group>
                 <transform>
-                    <scale x="5" y="5" z="5"/> <!-- Tamanho de Saturno -->
+                    <scale x="6" y="6" z="6" /> <!-- Tamanho de Júpiter -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Júpiter -->
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="-1" y="1" z="2" /> <!-- Distância de Europa a Júpiter -->
+                    <scale x="0.15" y="0.15" z="0.15" /> <!-- Tamanho de Europa -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Europa -->
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="3" y="-2" z="3" /> <!-- Distância de Ganimedes a Júpiter -->
+                    <scale x="0.18" y="0.18" z="0.18" /> <!-- Tamanho de Ganimedes -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Ganimedes -->
+                </models>
+            </group>
+        </group>
+        <group>
+            <transform>
+                <rotate angle="180" x="0" y="1" z="0" /> <!-- Rotação de Saturno relativa ao Sol -->
+                <translate x="66" y="0" z="0" />
+            </transform>
+            <group>
+                <transform>
+                    <scale x="5" y="5" z="5" /> <!-- Tamanho de Saturno -->
                 </transform>
                 <models>
                     <model file="./output/sphere.3d" /> <!-- Saturno -->
@@ -94,8 +141,17 @@
             </group>
             <group>
                 <transform>
-                    <rotate angle ="20" x="1" y="0" z="1"/> <!-- Ângulo de rotação do anel de Saturno -->
-                    <scale x="1" y="1" z="1"/> <!-- Tamanho do Anel -->
+                    <translate x="2" y="3" z="4" /> <!-- Distância de Tita a Saturno -->
+                    <scale x="0.2" y="0.2" z="0.2" /> <!-- Tamanho Tita -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Tita -->
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <rotate angle="20" x="1" y="0" z="1" /> <!-- Ângulo de rotação do anel de Saturno -->
+                    <scale x="1" y="1" z="1" /> <!-- Tamanho do Anel -->
                 </transform>
                 <models>
                     <model file="./output/ring.3d" /> <!-- Anel de Saturno -->
@@ -104,23 +160,49 @@
         </group>
         <group>
             <transform>
-                <rotate angle ="180" x="0" y="1" z="0"/> <!-- Rotação de Úrano relativa ao Sol -->
-                <translate x="80" y="0" z="0"/>
-                <scale x="3" y="3" z="3"/> <!-- Tamanho de Úrano -->
+                <rotate angle="180" x="0" y="1" z="0" /> <!-- Rotação de Úrano relativa ao Sol -->
+                <translate x="80" y="0" z="0" />
             </transform>
-            <models>
-                <model file="./output/sphere.3d" /> <!-- Úrano -->
-            </models>
+            <group>
+                <transform>
+                    <scale x="3" y="3" z="3" /> <!-- Tamanho de Úrano -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Úrano -->
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="1" z="2" /> <!-- Distância de Titania a Úrano -->
+                    <scale x="0.15" y="0.15" z="0.15" /> <!-- Tamanho Titania -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Titania -->
+                </models>
+            </group>
         </group>
         <group>
             <transform>
-                <rotate angle ="180" x="0" y="1" z="0"/> <!-- Rotação de Neptuno relativa ao Sol -->
-                <translate x="90" y="0" z="0"/>
-                <scale x="3" y="3" z="3"/> <!-- Tamanho de Neptuno -->
+                <rotate angle="180" x="0" y="1" z="0" /> <!-- Rotação de Neptuno relativa ao Sol -->
+                <translate x="90" y="0" z="0" />
             </transform>
-            <models>
-                <model file="./output/sphere.3d" /> <!-- Neptuno -->
-            </models>
+            <group>
+                <transform>
+                    <scale x="3" y="3" z="3" /> <!-- Tamanho de Neptuno -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Neptuno -->
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="-1.5" z="-2" /> <!-- Distância de Tritao a Neptuno -->
+                    <scale x="0.15" y="0.15" z="0.15" /> <!-- Tamanho Tritao  -->
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" /> <!-- Tritao -->
+                </models>
+            </group>
         </group>
     </group>
 </world>

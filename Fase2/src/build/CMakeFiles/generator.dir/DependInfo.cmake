@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase2/src/generator.cpp" "CMakeFiles/generator.dir/generator.cpp.o" "gcc" "CMakeFiles/generator.dir/generator.cpp.o.d"
-  "/home/hugo-cunha/Desktop/CG/ProjetoCG/Fase2/src/utils/Figure.cpp" "CMakeFiles/generator.dir/utils/Figure.cpp.o" "gcc" "CMakeFiles/generator.dir/utils/Figure.cpp.o.d"
+  "/Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase2/src/generator.cpp" "CMakeFiles/generator.dir/generator.cpp.o" "gcc" "CMakeFiles/generator.dir/generator.cpp.o.d"
+  "/Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase2/src/utils/Figure.cpp" "CMakeFiles/generator.dir/utils/Figure.cpp.o" "gcc" "CMakeFiles/generator.dir/utils/Figure.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

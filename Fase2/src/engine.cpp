@@ -29,104 +29,118 @@ const float cameraZoomStep = 0.5f;
 
 // -----------------------------------------------
 
-void changeSize(int w, int h) {
-	if(h == 0)
-		h = 1;
-	float ratio = w * 1.0 / h;
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+void changeSize(int w, int h)
+{
+    if (h == 0)
+        h = 1;
+    float ratio = w * 1.0 / h;
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
     glViewport(0, 0, w, h);
 
     gluPerspective(sceneConfig.fov, ratio, sceneConfig.near, sceneConfig.far);
-	glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_MODELVIEW);
 }
 
-
-void drawModels() {
-    if (sceneConfig.root) {
+void drawModels()
+{
+    if (sceneConfig.root)
+    {
         sceneConfig.root->draw(); // Inicia a cascatak
-    } else {
+    }
+    else
+    {
         std::cout << "[Engine] sceneConfig.root is null" << std::endl;
     }
 }
 
-void drawAxes(){
-	glBegin(GL_LINES);
-        // X axis in red
-        glColor3f(1.0f, 0.0f, 0.0f);
-        glVertex3f(-100.0f, 0.0f, 0.0f);
-        glVertex3f( 100.0f, 0.0f, 0.0f);
-        // Y Axis in Green
-        glColor3f(0.0f, 1.0f, 0.0f);
-        glVertex3f(0.0f, -100.0f, 0.0f);
-        glVertex3f(0.0f, 100.0f, 0.0f);
-        // Z Axis in Blue
-        glColor3f(0.0f, 0.0f, 1.0f);
-        glVertex3f(0.0f, 0.0f, -100.0f);
-        glVertex3f(0.0f, 0.0f, 100.0f);
-	glEnd();
+void drawAxes()
+{
+    glBegin(GL_LINES);
+    // X axis in red
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glVertex3f(-100.0f, 0.0f, 0.0f);
+    glVertex3f(100.0f, 0.0f, 0.0f);
+    // Y Axis in Green
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glVertex3f(0.0f, -100.0f, 0.0f);
+    glVertex3f(0.0f, 100.0f, 0.0f);
+    // Z Axis in Blue
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glVertex3f(0.0f, 0.0f, -100.0f);
+    glVertex3f(0.0f, 0.0f, 100.0f);
+    glEnd();
 }
 
-void keyboard(unsigned char key, int x, int y){
-	switch (key) {
-		case 'a':
-			angle -= 5.0f;
-			break;
-		case 'd':
-			angle += 5.0f;
-			break;
-		case 'e':
-			axes = !axes;
-			break;
-		case 'w':
-			scaleY += 0.5f;
-			break;
-		case 's':
-			scaleY -= 0.5f;
-			break;
-		case 'f':
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			break;
-		case 'l':
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			break;
-		case 'p':
-			glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-			break;
-		case 'i':
-			radius -= cameraZoomStep;
-			if (radius < 0.1f) radius = 0.1f;
-			break;
-		case 'o':
-			radius += cameraZoomStep;
-			break;
-	}
-	glutPostRedisplay();
-}
-
-void processSpecialKeys(int key, int x, int y) {
-    const float betaLimit = (3.14159265f / 2.0f) - 0.01f;
-
-    switch (key) {
-        case GLUT_KEY_UP:
-            beta_ += cameraAngleStep;
-            if (beta_ > betaLimit) beta_ = betaLimit;
-            break;
-        case GLUT_KEY_DOWN:
-            beta_ -= cameraAngleStep;
-            if (beta_ < -betaLimit) beta_ = -betaLimit;
-            break;
-        case GLUT_KEY_LEFT:
-            alpha -= cameraAngleStep;
-            break;
-        case GLUT_KEY_RIGHT:
-            alpha += cameraAngleStep;
-            break;
+void keyboard(unsigned char key, int x, int y)
+{
+    switch (key)
+    {
+    case 'a':
+        angle -= 5.0f;
+        break;
+    case 'd':
+        angle += 5.0f;
+        break;
+    case 'e':
+        axes = !axes;
+        break;
+    case 'w':
+        scaleY += 0.5f;
+        break;
+    case 's':
+        scaleY -= 0.5f;
+        break;
+    case 'f':
+        mode = GL_FILL;
+        break;
+    case 'l':
+        mode = GL_LINE;
+        break;
+    case 'p':
+        mode = GL_POINT;
+        break;
+        break;
+    case 'i':
+        radius -= cameraZoomStep;
+        if (radius < 0.1f)
+            radius = 0.1f;
+        break;
+    case 'o':
+        radius += cameraZoomStep;
+        break;
     }
     glutPostRedisplay();
 }
-    
-void renderScene(void) {
+
+void processSpecialKeys(int key, int x, int y)
+{
+    const float betaLimit = (3.14159265f / 2.0f) - 0.01f;
+
+    switch (key)
+    {
+    case GLUT_KEY_UP:
+        beta_ += cameraAngleStep;
+        if (beta_ > betaLimit)
+            beta_ = betaLimit;
+        break;
+    case GLUT_KEY_DOWN:
+        beta_ -= cameraAngleStep;
+        if (beta_ < -betaLimit)
+            beta_ = -betaLimit;
+        break;
+    case GLUT_KEY_LEFT:
+        alpha -= cameraAngleStep;
+        break;
+    case GLUT_KEY_RIGHT:
+        alpha += cameraAngleStep;
+        break;
+    }
+    glutPostRedisplay();
+}
+
+void renderScene(void)
+{
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
@@ -137,15 +151,15 @@ void renderScene(void) {
 
     gluLookAt(camX, camY, camZ,
               sceneConfig.lookAt[0], sceneConfig.lookAt[1], sceneConfig.lookAt[2],
-             sceneConfig.up[0], sceneConfig.up[1], sceneConfig.up[2]);
-
+              sceneConfig.up[0], sceneConfig.up[1], sceneConfig.up[2]);
 
     // Desenho dos eixos
-    if (axes) drawAxes();
+    if (axes)
+        drawAxes();
 
-	//glTranslatef(posX, 0.0f, posZ);
-	//glRotatef(angle, 0.0f, 1.0f, 0.0f);
-	//glScalef(1.0f, scaleY, 1.0f);
+    // glTranslatef(posX, 0.0f, posZ);
+    // glRotatef(angle, 0.0f, 1.0f, 0.0f);
+    // glScalef(1.0f, scaleY, 1.0f);
 
     glColor3f(1.0f, 1.0f, 1.0f);
     glPolygonMode(GL_FRONT_AND_BACK, mode);
@@ -156,13 +170,16 @@ void renderScene(void) {
 
 // ------------------------------------------------
 
-int main(int argc, char** argv) {
-    if (argc < 2) {
+int main(int argc, char **argv)
+{
+    if (argc < 2)
+    {
         cout << "Uso: ./engine config.xml" << endl;
         return 1;
     }
 
-    if (!sceneConfig.loadXML(argv[1])) {
+    if (!sceneConfig.loadXML(argv[1]))
+    {
         cout << "Erro ao carregar XML!" << endl;
         return 1;
     }
