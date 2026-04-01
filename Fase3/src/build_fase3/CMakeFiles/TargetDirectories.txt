@@ -1,0 +1,4 @@
+/Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase3/src/build_fase3/CMakeFiles/engine.dir
+/Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase3/src/build_fase3/CMakeFiles/generator.dir
+/Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase3/src/build_fase3/CMakeFiles/edit_cache.dir
+/Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase3/src/build_fase3/CMakeFiles/rebuild_cache.dir
