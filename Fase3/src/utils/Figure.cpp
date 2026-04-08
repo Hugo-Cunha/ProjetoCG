@@ -1,3 +1,13 @@
+#include <GL/glew.h>
+
+#include "Figure.h"
+
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -7,13 +17,6 @@
 #include <iostream>
 #include <random>
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include "Figure.h"
 
 namespace fs = std::filesystem;
 
@@ -77,7 +80,7 @@ bool Figure::load(const std::string &filename)
     file.close();
     return true;
 }
-
+/*
 void Figure::draw()
 {
     glBegin(GL_TRIANGLES);
@@ -103,15 +106,43 @@ void Figure::draw()
 
     glEnd();
 }
-/*
-void Figure::draw(){
-    glBegin(GL_TRIANGLES);
-    for (const auto& p : vertices) {
-        glVertex3f(p.x, p.y, p.z);
-    }
-    glEnd();
-}
 */
+
+void Figure::prepareVBO() {
+    if (vertices.empty()) return;
+
+    vertexCount = vertices.size();
+
+    // 1. Criar o buffer
+    glGenBuffers(1, &vbo);
+    
+    // 2. "Agarrar" o buffer para trabalhar nele
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    
+    // 3. Copiar os dados do nosso vector para a memória da placa gráfica
+    glBufferData(GL_ARRAY_BUFFER, 
+                 sizeof(Point) * vertexCount, 
+                 vertices.data(), 
+                 GL_STATIC_DRAW);
+    
+    // 4. Limpar o vetor da RAM (opcional) para poupar memória, pois já está na GPU
+    vertices.clear(); 
+}
+
+void Figure::draw() {
+    if (vbo == 0) return; // Se não houver VBO, não desenha nada
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    // Dizemos ao OpenGL onde estão os floats (x, y, z) dentro do buffer
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, 0);
+
+    // O comando "mágico" que desenha tudo de uma vez 
+    glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 
 // --- Protótipos das Primitivas
 Plane::Plane(float size, int divisions)
@@ -506,3 +537,84 @@ Asteroid::Asteroid(float radius, int slices, int stacks, float roughness)
     delete[] py;
     delete[] pz;
 };
+
+float BezierPatch::bernstein(int i, float t) {
+    switch (i) {
+        case 0: return pow(1 - t, 3);
+        case 1: return 3 * t * pow(1 - t, 2);
+        case 2: return 3 * pow(t, 2) * (1 - t);
+        case 3: return pow(t, 3);
+        default: return 0;
+    }
+}
+
+Point BezierPatch::getBezierPoint(float u, float v, const std::vector<Point>& controlPoints, const std::vector<int>& indices) {
+    float x = 0, y = 0, z = 0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            float b_u = bernstein(j, u); 
+            float b_v = bernstein(i, v); 
+            
+            Point p = controlPoints[indices[i * 4 + j]];
+            x += p.x * b_u * b_v;
+            y += p.y * b_u * b_v;
+            z += p.z * b_u * b_v;
+        }
+    }
+    return Point(x, y, z);
+}
+BezierPatch::BezierPatch(const std::string &patchFile, int tessellation) {
+    std::ifstream file(patchFile);
+    if (!file.is_open()) return;
+
+    std::string line;
+    // 1. Ler número de patches
+    std::getline(file, line);
+    int numPatches = std::stoi(line);
+    std::vector<std::vector<int>> allIndices(numPatches, std::vector<int>(16));
+
+    for (int i = 0; i < numPatches; i++) {
+        std::getline(file, line);
+        std::stringstream ss(line);
+        for (int j = 0; j < 16; j++) {
+            std::string val;
+            std::getline(ss, val, ',');
+            allIndices[i][j] = std::stoi(val);
+        }
+    }
+
+    // 2. Ler número de pontos de controlo e os pontos
+    std::getline(file, line);
+    int numControlPoints = std::stoi(line);
+    std::vector<Point> controlPoints;
+    for (int i = 0; i < numControlPoints; i++) {
+        std::getline(file, line);
+        std::stringstream ss(line);
+        float x, y, z;
+        std::string val;
+        std::getline(ss, val, ','); x = std::stof(val);
+        std::getline(ss, val, ','); y = std::stof(val);
+        std::getline(ss, val, ','); z = std::stof(val);
+        controlPoints.push_back(Point(x, y, z));
+    }
+
+    // 3. Gerar a malha de triângulos baseada na tesselação [cite: 120
+    float step = 1.0f / tessellation;
+    for (int p = 0; p < numPatches; p++) {
+        for (int i = 0; i < tessellation; i++) {
+            for (int j = 0; j < tessellation; j++) {
+                float u1 = i * step, u2 = (i + 1) * step;
+                float v1 = j * step, v2 = (j + 1) * step;
+
+                Point p00 = getBezierPoint(u1, v1, controlPoints, allIndices[p]);
+                Point p10 = getBezierPoint(u2, v1, controlPoints, allIndices[p]);
+                Point p01 = getBezierPoint(u1, v2, controlPoints, allIndices[p]);
+                Point p11 = getBezierPoint(u2, v2, controlPoints, allIndices[p]);
+
+                // Adiciona os triângulos no sentido Anti-Horário (CCW)
+                addTriangle(p00, p10, p01);
+                addTriangle(p10, p11, p01);
+            }
+        }
+    }
+}

@@ -26,9 +26,11 @@ int main(int argc, char **argv)
 
         else if (model == "cone" && argc == 7)fig = new Cone(std::stof(argv[2]), std::stof(argv[3]), std::stoi(argv[4]), std::stoi(argv[5]));
         
-        else if (model == "ring" && argc == 6) {fig = new Ring(std::stof(argv[2]), std::stof(argv[3]), std::stoi(argv[4]));
+        else if (model == "ring" && argc == 6)fig = new Ring(std::stof(argv[2]), std::stof(argv[3]), std::stoi(argv[4]));
 
-        }else if (model == "asteroid" && argc == 7) {
+        else if (model == "patch" && argc == 5) fig = new BezierPatch(argv[2], std::stoi(argv[3]));
+
+        else if (model == "asteroid" && argc == 7) {
             fig = new Asteroid(std::stof(argv[2]), std::stoi(argv[3]), std::stoi(argv[4]), std::stof(argv[5]));
 
         }else{

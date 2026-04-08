@@ -1,3 +1,6 @@
+#include "utils/Figure.h"
+#include "utils/Config.h"
+
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
@@ -8,8 +11,6 @@
 #include <vector>
 #include <fstream>
 #include <cmath>
-#include "utils/Figure.h"
-#include "utils/Config.h"
 
 using namespace std;
 
@@ -198,7 +199,7 @@ void renderScene(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glDisable(GL_CULL_FACE);
+    // glDisable(GL_CULL_FACE);
     // Câmara usando coordenadas esféricas para permitir rotação
     float camX = radius * cos(beta_) * sin(alpha);
     float camY = radius * sin(beta_);
@@ -219,9 +220,11 @@ void renderScene(void)
     glColor3f(1.0f, 1.0f, 1.0f);
     glPolygonMode(GL_FRONT_AND_BACK, mode);
     drawModels();
-    drawCinturaAsteroides();
+    //drawCinturaAsteroides();
 
     glutSwapBuffers();
+
+    glutPostRedisplay();
 }
 
 // ------------------------------------------------
@@ -233,25 +236,34 @@ int main(int argc, char **argv)
         cout << "Uso: ./engine config.xml" << endl;
         return 1;
     }
+    //asteroid1.load("./output/asteroid1.3d");
+    //asteroid2.load("./output/asteroid2.3d");
+    //asteroid3.load("./output/asteroid3.3d");
 
-    if (!sceneConfig.loadXML(argv[1]))
-    {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+
+    glutInitWindowSize(800, 800);
+    glutCreateWindow("CG Engine - Fase 3");
+
+    GLenum err = glewInit();
+    if (GLEW_OK != err) {
+        std::cerr << "Erro a inicializar o GLEW: " << glewGetErrorString(err) << std::endl;
+        return 1;
+    }
+
+    if (!sceneConfig.loadXML(argv[1])){
         cout << "Erro ao carregar XML!" << endl;
         return 1;
     }
-    asteroid1.load("./output/asteroid1.3d");
-    asteroid2.load("./output/asteroid2.3d");
-    asteroid3.load("./output/asteroid3.3d");
 
     radius = sqrt(pow(sceneConfig.posCam[0], 2) + pow(sceneConfig.posCam[1], 2) + pow(sceneConfig.posCam[2], 2));
     beta_ = asin(sceneConfig.posCam[1] / radius);
     alpha = atan2(sceneConfig.posCam[0], sceneConfig.posCam[2]);
 
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-
-    glutInitWindowSize(sceneConfig.width, sceneConfig.height);
-    glutCreateWindow("CG Engine - Fase 2");
+    if (sceneConfig.width > 0 && sceneConfig.height > 0) {
+        glutReshapeWindow(sceneConfig.width, sceneConfig.height);
+    }
 
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);

@@ -19,17 +19,34 @@ public:
 };
 
 class Translate : public Transformation {
-    float x, y, z;
+    float time;
+    bool align;
+    std::vector<Point> p;
+
 public:
-    Translate(float x, float y, float z) : x(x), y(y), z(z) {}
-    void apply() override { glTranslatef(x, y, z); }
+    Translate(float t, bool a, std::vector<Point> points);
+    void apply() override;
+
+private:
+    // Funções auxiliares para a curva [cite: 122, 134]
+    void getGlobalCatmullRomPoint(float gt, float *pos, float *deriv);
+    void getCatmullRomPoint(float t, Point p0, Point p1, Point p2, Point p3, float *pos, float *deriv);
+    void applyAlignment(float *deriv);
 };
 
 class Rotate : public Transformation {
-    float angle, x, y, z;
+    float angle, time, x, y, z;
+    bool isAnimated;
+
 public:
-    Rotate(float a, float x, float y, float z) : angle(a), x(x), y(y), z(z) {}
-    void apply() override { glRotatef(angle, x, y, z); }
+    
+    Rotate(float val, float x, float y, float z, bool animated) 
+        : x(x), y(y), z(z), isAnimated(animated) { // val pode ser ângulo (estático) ou tempo (animado) 
+        if (animated) { this->time = val; this->angle = 0; }
+        else { this->angle = val; this->time = 0; }
+    }
+
+    void apply() override;
 };
 
 class Scale : public Transformation {

@@ -83,13 +83,45 @@ void Config::parseGroup(XMLElement* groupElement, Group* currentGroup) {
             for (XMLElement* t = child->FirstChildElement(); t; t = t->NextSiblingElement()) {
                 std::string tName = t->Value();
                 if (tName == "translate") {
-                    currentGroup->transforms.push_back(
-                        new Translate(t->FloatAttribute("x"), t->FloatAttribute("y"), t->FloatAttribute("z")));
+                    if (t->Attribute("time")) { // Caso ANIMADO (Fase 3
+                        float time = t->FloatAttribute("time");
+                        bool align = t->BoolAttribute("align");
+                        std::vector<Point> points;
+
+                        // Percorrer os sub-elementos <point>
+                        for (tinyxml2::XMLElement* p = t->FirstChildElement("point"); p; p = p->NextSiblingElement("point")) {
+                            points.push_back(Point(p->FloatAttribute("x"), p->FloatAttribute("y"), p->FloatAttribute("z")));
+                        }
+                        currentGroup->transforms.push_back(
+                            new Translate(time, align, points)
+                        );
+                    } 
+                    else { // Caso ESTÁTICO (Fase 1/2)
+                        std::vector<Point> p;
+                        p.push_back(Point(t->FloatAttribute("x"), t->FloatAttribute("y"), t->FloatAttribute("z")));
+                        currentGroup->transforms.push_back(
+                            new Translate(0, false, p)
+                        );
                     }
-                else if (tName == "rotate"){
-                    currentGroup->transforms.push_back(
-                        new Rotate(t->FloatAttribute("angle"), t->FloatAttribute("x"), t->FloatAttribute("y"), t->FloatAttribute("z")));
+                }
+                else if (tName == "rotate") {
+                    float x = t->FloatAttribute("x");
+                    float y = t->FloatAttribute("y");
+                    float z = t->FloatAttribute("z");
+
+                    if (t->Attribute("time")) { // Caso ANIMADO (Fase 3) 
+                        float time = t->FloatAttribute("time");
+                        currentGroup->transforms.push_back(
+                            new Rotate(time, x, y, z, true)  // true indica que usa tempo
+                        );
+                    } 
+                    else { // Caso ESTÁTICO (Fase 1/2)
+                        float angle = t->FloatAttribute("angle");
+                        currentGroup->transforms.push_back(
+                            new Rotate(angle, x, y, z, false)
+                        );
                     }
+                }
                 else if (tName == "scale"){
                     currentGroup->transforms.push_back(
                         new Scale(t->FloatAttribute("x"), t->FloatAttribute("y"), t->FloatAttribute("z")));
@@ -103,6 +135,7 @@ void Config::parseGroup(XMLElement* groupElement, Group* currentGroup) {
                 std::cout << "[Config] Loading model: " << (fname ? fname : "(null)") << std::endl;
                 Figure f;
                 if (fname && f.load(fname)) {
+                    f.prepareVBO(); // Prepara o VBO para renderização eficiente
                     currentGroup->models.push_back(f);
                     std::cout << "[Config]   -> ok" << std::endl;
                 } else {
