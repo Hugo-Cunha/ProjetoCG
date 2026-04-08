@@ -1,0 +1,323 @@
+<world>
+    <window width="512" height="512" />
+    <camera>
+        <position x="30" y="40" z="80" />
+        <lookAt x="0" y="0" z="0" />
+        <up x="0" y="1" z="0" />
+        <projection fov="30" near="1" far="1000" />
+    </camera>
+
+    <group>
+        <!-- SOL -->
+        <group>
+            <transform>
+                <scale x="20" y="20" z="20" />
+            </transform>
+            <models>
+                <model file="./output/sphere.3d" />
+            </models>
+        </group>
+
+        <!-- MERCÚRIO -->
+        <group>
+            <transform>
+                <rotate time="2" x="0" y="1" z="0" />
+            </transform>
+            <group>
+                <transform>
+                    <translate x="24" y="0" z="0" />
+                    <scale x="0.3" y="0.3" z="0.3" />
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" />
+                </models>
+            </group>
+        </group>
+
+        <!-- VÉNUS -->
+        <group>
+            <transform>
+                <rotate time="5" x="0" y="1" z="0" />
+            </transform>
+            <group>
+                <transform>
+                    <translate x="29" y="0" z="0" />
+                    <scale x="0.5" y="0.5" z="0.5" />
+                </transform>
+                <models>
+                    <model file="./output/sphere.3d" />
+                </models>
+            </group>
+        </group>
+
+        <!-- TERRA + LUA -->
+        <group>
+            <transform>
+                <rotate time="8" x="0" y="1" z="0" />
+            </transform>
+
+            <group>
+                <transform>
+                    <translate x="34" y="0" z="0" />
+                </transform>
+
+                <group>
+                    <transform>
+                        <scale x="0.5" y="0.5" z="0.5" />
+                    </transform>
+                    <models>
+                        <model file="./output/sphere.3d" />
+                    </models>
+                </group>
+
+                <group>
+                    <transform>
+                        <rotate time="2" x="0" y="1" z="0" />
+                    </transform>
+                    <group>
+                        <transform>
+                            <translate x="0" y="0" z="1" />
+                            <scale x="0.1" y="0.1" z="0.1" />
+                        </transform>
+                        <models>
+                            <model file="./output/sphere.3d" />
+                        </models>
+                    </group>
+                </group>
+            </group>
+        </group>
+
+        <!-- MARTE -->
+        <group>
+            <transform>
+                <rotate time="12" x="0" y="1" z="0" />
+            </transform>
+
+            <group>
+                <transform>
+                    <translate x="39" y="0" z="0" />
+                </transform>
+
+                <group>
+                    <transform>
+                        <scale x="0.4" y="0.4" z="0.4" />
+                    </transform>
+                    <models>
+                        <model file="./output/sphere.3d" />
+                    </models>
+                </group>
+
+                <!-- Fobos -->
+                <group>
+                    <transform>
+                        <rotate time="2" x="0" y="1" z="0" />
+                    </transform>
+                    <group>
+                        <transform>
+                            <translate x="-0.5" y="0.3" z="0.5" />
+                            <scale x="0.1" y="0.1" z="0.1" />
+                        </transform>
+                        <models>
+                            <model file="./output/sphere.3d" />
+                        </models>
+                    </group>
+                </group>
+
+                <!-- Deimos -->
+                <group>
+                    <transform>
+                        <rotate time="3" x="0" y="1" z="0" />
+                    </transform>
+                    <group>
+                        <transform>
+                            <translate x="0.5" y="0.5" z="0.5" />
+                            <scale x="0.08" y="0.08" z="0.08" />
+                        </transform>
+                        <models>
+                            <model file="./output/sphere.3d" />
+                        </models>
+                    </group>
+                </group>
+            </group>
+        </group>
+
+        <!-- JÚPITER -->
+        <group>
+            <transform>
+                <rotate time="20" x="0" y="1" z="0" />
+            </transform>
+
+            <group>
+                <transform>
+                    <translate x="49" y="0" z="0" />
+                </transform>
+
+                <group>
+                    <transform>
+                        <scale x="6" y="6" z="6" />
+                    </transform>
+                    <models>
+                        <model file="./output/sphere.3d" />
+                    </models>
+                </group>
+
+                <!-- Europa -->
+                <group>
+                    <transform>
+                        <rotate time="4" x="0" y="1" z="0" />
+                    </transform>
+                    <group>
+                        <transform>
+                            <translate x="-1" y="1" z="2" />
+                            <scale x="0.15" y="0.15" z="0.15" />
+                        </transform>
+                        <models>
+                            <model file="./output/sphere.3d" />
+                        </models>
+                    </group>
+                </group>
+
+                <!-- Ganimedes -->
+                <group>
+                    <transform>
+                        <rotate time="6" x="0" y="1" z="0" />
+                    </transform>
+                    <group>
+                        <transform>
+                            <translate x="3" y="-2" z="3" />
+                            <scale x="0.18" y="0.18" z="0.18" />
+                        </transform>
+                        <models>
+                            <model file="./output/sphere.3d" />
+                        </models>
+                    </group>
+                </group>
+            </group>
+        </group>
+
+        <!-- SATURNO -->
+        <group>
+            <transform>
+                <rotate time="25" x="0" y="1" z="0" />
+            </transform>
+
+            <group>
+                <transform>
+                    <translate x="66" y="0" z="0" />
+                </transform>
+
+                <group>
+                    <transform>
+                        <scale x="5" y="5" z="5" />
+                    </transform>
+                    <models>
+                        <model file="./output/sphere.3d" />
+                    </models>
+                </group>
+
+                <!-- Titã -->
+                <group>
+                    <transform>
+                        <rotate time="5" x="0" y="1" z="0" />
+                    </transform>
+                    <group>
+                        <transform>
+                            <translate x="2" y="3" z="4" />
+                            <scale x="0.2" y="0.2" z="0.2" />
+                        </transform>
+                        <models>
+                            <model file="./output/sphere.3d" />
+                        </models>
+                    </group>
+                </group>
+
+                <!-- Anel -->
+                <group>
+                    <transform>
+                        <rotate angle="20" x="1" y="0" z="1" />
+                        <scale x="1" y="1" z="1" />
+                    </transform>
+                    <models>
+                        <model file="./output/ring.3d" />
+                    </models>
+                </group>
+            </group>
+        </group>
+
+        <!-- ÚRANO -->
+        <group>
+            <transform>
+                <rotate time="30" x="0" y="1" z="0" />
+            </transform>
+
+            <group>
+                <transform>
+                    <translate x="80" y="0" z="0" />
+                </transform>
+
+                <group>
+                    <transform>
+                        <scale x="3" y="3" z="3" />
+                    </transform>
+                    <models>
+                        <model file="./output/sphere.3d" />
+                    </models>
+                </group>
+
+                <!-- Titania -->
+                <group>
+                    <transform>
+                        <rotate time="4" x="0" y="1" z="0" />
+                    </transform>
+                    <group>
+                        <transform>
+                            <translate x="0" y="1" z="2" />
+                            <scale x="0.15" y="0.15" z="0.15" />
+                        </transform>
+                        <models>
+                            <model file="./output/sphere.3d" />
+                        </models>
+                    </group>
+                </group>
+            </group>
+        </group>
+
+        <!-- NEPTUNO -->
+        <group>
+            <transform>
+                <rotate time="35" x="0" y="1" z="0" />
+            </transform>
+
+            <group>
+                <transform>
+                    <translate x="90" y="0" z="0" />
+                </transform>
+
+                <group>
+                    <transform>
+                        <scale x="3" y="3" z="3" />
+                    </transform>
+                    <models>
+                        <model file="./output/sphere.3d" />
+                    </models>
+                </group>
+
+                <!-- Tritão -->
+                <group>
+                    <transform>
+                        <rotate time="4" x="0" y="1" z="0" />
+                    </transform>
+                    <group>
+                        <transform>
+                            <translate x="0" y="-1.5" z="-2" />
+                            <scale x="0.15" y="0.15" z="0.15" />
+                        </transform>
+                        <models>
+                            <model file="./output/sphere.3d" />
+                        </models>
+                    </group>
+                </group>
+            </group>
+        </group>
+    </group>
+</world>
