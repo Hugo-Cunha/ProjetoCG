@@ -26,7 +26,7 @@ float angle = 0.0f;
 float scaleY = 1.0f;
 
 const float cameraAngleStep = 3.14159265f / 30.0f;
-const float cameraZoomStep = 0.5f;
+const float cameraZoomStep = 2.0f;
 
 Figure asteroid1;
 Figure asteroid2;
