@@ -25,6 +25,7 @@ class Translate : public Transformation {
 
 public:
     Translate(float t, bool a, std::vector<Point> points);
+    void drawCurve();
     void apply() override;
 
 private:

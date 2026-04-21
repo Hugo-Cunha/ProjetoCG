@@ -22,19 +22,38 @@ void Rotate::apply() {
 }
 
 void Translate::apply() {
-    if (time > 0 && p.size() >= 4) { // Requer mínimo de 4 pontos [cite: 135]
+    if (time > 0 && p.size() >= 4) {
+        drawCurve();
+
         float pos[3], deriv[3];
         float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
-        float gt = fmod(elapsed, time) / time; // t entre 0 e 1 [cite: 122]
+        float gt = fmod(elapsed, time) / time;
 
         getGlobalCatmullRomPoint(gt, pos, deriv);
         glTranslatef(pos[0], pos[1], pos[2]);
 
-        if (align) applyAlignment(deriv); // Alinhamento com a curva 
-    } else if (!p.empty()) {
+        if (align) applyAlignment(deriv);
+    } 
+    else if (!p.empty()) {
         glTranslatef(p[0].x, p[0].y, p[0].z);
     }
 }
+
+void Translate::drawCurve() {
+    if (time <= 0 || p.size() < 4) return;
+
+    float pos[3], deriv[3];
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 100; i++) {
+        float gt = (float)i / 100.0f;
+        getGlobalCatmullRomPoint(gt, pos, deriv);
+        glVertex3f(pos[0], pos[1], pos[2]);
+    }
+    glEnd();
+}
+
 
 void Group::draw() {
     // 1. Guarda a matriz atual
@@ -43,6 +62,7 @@ void Group::draw() {
     for (auto t : transforms) {
         t->apply();
     }
+
     // 3. Desenha os modelos deste grupo
     for (auto& fig : models) {
         fig.draw();
