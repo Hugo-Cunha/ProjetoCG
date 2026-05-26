@@ -1,63 +1,96 @@
 cmake_minimum_required(VERSION 3.5)
 
-# Project Name
-PROJECT(fase3)
+project(fase4)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Resolve o aviso do OpenGL
+# Resolve o aviso do OpenGL em sistemas mais recentes
 cmake_policy(SET CMP0072 NEW)
+
+# Ajuda o CMake a encontrar bibliotecas instaladas pelo Homebrew no macOS
+if(APPLE)
+    list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew" "/usr/local")
+endif()
 
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(DevIL REQUIRED)
 
-include_directories(${OpenGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIR} ${GLEW_INCLUDE_DIRS} ${IL_INCLUDE_DIR})
-include_directories(utils)
+include_directories(
+    ${OPENGL_INCLUDE_DIRS}
+    ${GLUT_INCLUDE_DIR}
+    ${IL_INCLUDE_DIR}
+    utils
+)
 
-# Associa a biblioteca das figuras e dos pontos aos executáveis
-add_executable(engine engine.cpp tinyXML/tinyxml2.cpp utils/Figure.cpp utils/Config.cpp utils/Group.cpp)
-add_executable(generator ./generator.cpp utils/Figure.cpp)
+add_executable(
+    engine
+    engine.cpp
+    tinyXML/tinyxml2.cpp
+    utils/Figure.cpp
+    utils/Config.cpp
+    utils/Group.cpp
+)
 
-if(NOT OPENGL_FOUND)
-    message(ERROR " OPENGL not found!")
-endif(NOT OPENGL_FOUND)
+add_executable(
+    generator
+    generator.cpp
+    utils/Figure.cpp
+)
 
-if  (WIN32)
+if(WIN32)
 
-	message(STATUS "Toolkits_DIR set to: " ${TOOLKITS_FOLDER})
-	set(TOOLKITS_FOLDER "" CACHE PATH "Path to Toolkits folder")
-	
-	if (NOT EXISTS "${TOOLKITS_FOLDER}/glut/GL/glut.h" OR NOT EXISTS "${TOOLKITS_FOLDER}/glut/glut32.lib")
-		message(ERROR ": GLUT not found")
-	endif (NOT EXISTS "${TOOLKITS_FOLDER}/glut/GL/glut.h" OR NOT EXISTS "${TOOLKITS_FOLDER}/glut/glut32.lib")	
-	
-	
-	include_directories(${TOOLKITS_FOLDER}/glut )
-	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} 
-										  ${TOOLKITS_FOLDER}/glut/glut32.lib)
-	target_link_libraries(generator ${OPENGL_LIBRARIES} ${TOOLKITS_FOLDER}/glut/glut32.lib)
-	target_link_libraries(engine ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${TOOLKITS_FOLDER}/glut/glut32.lib)
-	
-	if (EXISTS "${TOOLKITS_FOLDER}/glut/glut32.dll" )
-		file(COPY ${TOOLKITS_FOLDER}/glut/glut32.dll DESTINATION ${CMAKE_BINARY_DIR})
-	endif(EXISTS "${TOOLKITS_FOLDER}/glut/glut32.dll" )	
-	
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
-else (WIN32) #Linux and Mac
+    message(STATUS "Toolkits_DIR set to: ${TOOLKITS_FOLDER}")
+    set(TOOLKITS_FOLDER "" CACHE PATH "Path to Toolkits folder")
 
-	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
-	find_package(GLUT REQUIRED)
-    find_package(GLEW REQUIRED)
+    if(NOT EXISTS "${TOOLKITS_FOLDER}/glut/GL/glut.h" OR NOT EXISTS "${TOOLKITS_FOLDER}/glut/glut32.lib")
+        message(ERROR ": GLUT not found")
+    endif()
 
-    include_directories(${GLUT_INCLUDE_DIR} ${GLEW_INCLUDE_DIRS})
-    target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES} ${IL_LIBRARIES})
-    target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES} ${IL_LIBRARIES})
+    include_directories(${TOOLKITS_FOLDER}/glut)
 
-    if(NOT GLUT_FOUND)
-       message(ERROR ": GLUT not found!")
-    endif(NOT GLUT_FOUND)
-	
-endif(WIN32)
+    target_link_libraries(
+        engine
+        ${OPENGL_LIBRARIES}
+        ${TOOLKITS_FOLDER}/glut/glut32.lib
+        GLEW::GLEW
+        ${IL_LIBRARIES}
+    )
+
+    target_link_libraries(
+        generator
+        ${OPENGL_LIBRARIES}
+        ${TOOLKITS_FOLDER}/glut/glut32.lib
+        GLEW::GLEW
+        ${IL_LIBRARIES}
+    )
+
+    if(EXISTS "${TOOLKITS_FOLDER}/glut/glut32.dll")
+        file(COPY ${TOOLKITS_FOLDER}/glut/glut32.dll DESTINATION ${CMAKE_BINARY_DIR})
+    endif()
+
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT engine)
+
+else()
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
+
+    target_link_libraries(
+        engine
+        ${OPENGL_LIBRARIES}
+        ${GLUT_LIBRARIES}
+        GLEW::GLEW
+        ${IL_LIBRARIES}
+    )
+
+    target_link_libraries(
+        generator
+        ${OPENGL_LIBRARIES}
+        ${GLUT_LIBRARIES}
+        GLEW::GLEW
+        ${IL_LIBRARIES}
+    )
+
+endif()

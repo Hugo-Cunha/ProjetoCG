@@ -8,6 +8,7 @@
 #include <GL/glut.h>
 #endif
 
+#include <sstream>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -372,26 +373,34 @@ Ring::Ring(float ri, float re, int slices) {
     float delta = (2.0f * M_PI) / slices;
 
     for (int i = 0; i < slices; i++) {
-        float a1 = i * delta, a2 = (i + 1) * delta;
-        float u1 = (float)i / slices, u2 = (float)(i + 1) / slices;
+        float a1 = i * delta;
+        float a2 = (i + 1) * delta;
 
-        // FACE DE CIMA (Normal 0, 1, 0)
-        Point top_p1i(ri * sin(a1), 0, ri * cos(a1),  0, 1, 0,  u1, 0);
-        Point top_p2i(ri * sin(a2), 0, ri * cos(a2),  0, 1, 0,  u2, 0);
-        Point top_p1e(re * sin(a1), 0, re * cos(a1),  0, 1, 0,  u1, 1);
-        Point top_p2e(re * sin(a2), 0, re * cos(a2),  0, 1, 0,  u2, 1);
+        float v1 = (float)i / slices;
+        float v2 = (float)(i + 1) / slices;
+
+        float ui = 1.0f; // raio interior
+        float ue = 0.0f; // raio exterior
+
+        // FACE DE CIMA
+        Point top_p1i(ri * sin(a1), 0, ri * cos(a1),  0, 1, 0,  ui, v1);
+        Point top_p2i(ri * sin(a2), 0, ri * cos(a2),  0, 1, 0,  ui, v2);
+        Point top_p1e(re * sin(a1), 0, re * cos(a1),  0, 1, 0,  ue, v1);
+        Point top_p2e(re * sin(a2), 0, re * cos(a2),  0, 1, 0,  ue, v2);
+
         addTriangle(top_p1i, top_p2e, top_p1e);
         addTriangle(top_p1i, top_p2i, top_p2e);
 
-        // FACE DE BAIXO (Normal 0, -1, 0)
-        Point bot_p1i(ri * sin(a1), 0, ri * cos(a1),  0, -1, 0,  u1, 0);
-        Point bot_p2i(ri * sin(a2), 0, ri * cos(a2),  0, -1, 0,  u2, 0);
-        Point bot_p1e(re * sin(a1), 0, re * cos(a1),  0, -1, 0,  u1, 1);
-        Point bot_p2e(re * sin(a2), 0, re * cos(a2),  0, -1, 0,  u2, 1);
+        // FACE DE BAIXO
+        Point bot_p1i(ri * sin(a1), 0, ri * cos(a1),  0, -1, 0,  ui, v1);
+        Point bot_p2i(ri * sin(a2), 0, ri * cos(a2),  0, -1, 0,  ui, v2);
+        Point bot_p1e(re * sin(a1), 0, re * cos(a1),  0, -1, 0,  ue, v1);
+        Point bot_p2e(re * sin(a2), 0, re * cos(a2),  0, -1, 0,  ue, v2);
+
         addTriangle(bot_p1i, bot_p1e, bot_p2e);
         addTriangle(bot_p1i, bot_p2e, bot_p2i);
     }
-};
+}
 
 Asteroid::Asteroid(float radius, int slices, int stacks, float roughness) {
     float alpha_step = (2.0f * M_PI) / slices;

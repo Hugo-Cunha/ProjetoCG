@@ -1,0 +1,4 @@
+/Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/build_mac/CMakeFiles/engine.dir
+/Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/build_mac/CMakeFiles/generator.dir
+/Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/build_mac/CMakeFiles/edit_cache.dir
+/Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/build_mac/CMakeFiles/rebuild_cache.dir
