@@ -1,5 +1,5 @@
 CMakeFiles/engine.dir/utils/Figure.cpp.o: \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.cpp \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.cpp \
   /opt/homebrew/include/GL/glew.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/cstddef \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__config \
@@ -65,7 +65,7 @@ CMakeFiles/engine.dir/utils/Figure.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/os/availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.h \
   /opt/homebrew/include/IL/il.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdio.h \
@@ -760,7 +760,7 @@ CMakeFiles/engine.dir/utils/Figure.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__locale_dir/locale_base_api/bsd_locale_defaults.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/cstdarg \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Point.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Point.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/sstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__ostream/basic_ostream.h \

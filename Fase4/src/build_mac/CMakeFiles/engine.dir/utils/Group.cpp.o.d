@@ -1,6 +1,6 @@
 CMakeFiles/engine.dir/utils/Group.cpp.o: \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Group.cpp \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Group.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Group.cpp \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Group.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/vector \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/copy.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/copy_move_common.h \
@@ -754,12 +754,12 @@ CMakeFiles/engine.dir/utils/Group.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__locale_dir/locale_base_api/bsd_locale_defaults.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/cstdarg \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.h \
   /opt/homebrew/include/GL/glew.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers/glu.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/os/availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h \
   /opt/homebrew/include/IL/il.h \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Point.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Point.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h

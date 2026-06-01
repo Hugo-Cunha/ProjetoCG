@@ -1,5 +1,5 @@
 CMakeFiles/generator.dir/generator.cpp.o: \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/generator.cpp \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/generator.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__config_site \
@@ -813,11 +813,11 @@ CMakeFiles/generator.dir/generator.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/u8path.h \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.h \
   /opt/homebrew/include/GL/glew.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers/glu.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/os/availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h \
   /opt/homebrew/include/IL/il.h \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Point.h
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Point.h

@@ -1,6 +1,6 @@
 CMakeFiles/engine.dir/engine.cpp.o: \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/engine.cpp \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/engine.cpp \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Figure.h \
   /opt/homebrew/include/GL/glew.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/cstddef \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__config \
@@ -760,11 +760,11 @@ CMakeFiles/engine.dir/engine.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__locale_dir/locale_base_api/bsd_locale_defaults.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/cstdarg \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Point.h \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Config.h \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/Group.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Point.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Config.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/Group.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h \
-  /Users/diogoalves/Documents/GitHub/ProjetoCG/Fase4/src/utils/../tinyXML/tinyxml2.h \
+  /Users/miguelsantos/Documents/GitHub/ProjetoCG/Fase4/src/utils/../tinyXML/tinyxml2.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/istream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__ostream/basic_ostream.h \
